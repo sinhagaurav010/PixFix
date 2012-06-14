@@ -13,9 +13,16 @@
 #import "SplashScreenController.h"
 #import "UploadViewController.h"
 #import "EventViewController.h"
+#import "NewEventViewController.h"
+#import "EGORefreshTableHeaderView.h"
+#import "EventViewCell.h"
 
-@interface AddEventViewController : UIViewController<ModalDelegate>
+@interface AddEventViewController : UIViewController<ModalDelegate,EGORefreshTableHeaderDelegate>
 {
+    BOOL _reloading;
+
+    EGORefreshTableHeaderView *_refreshHeaderView;
+
     ModalController *modal;
     BOOL isGet;
     IBOutlet UITableView *tableEvent;

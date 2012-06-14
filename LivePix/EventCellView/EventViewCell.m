@@ -9,6 +9,7 @@
 #import "EventViewCell.h"
 
 @implementation EventViewCell
+@synthesize lableCreater,lableName,imageMain;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

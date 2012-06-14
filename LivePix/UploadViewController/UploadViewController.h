@@ -15,10 +15,12 @@
 #import "ELCAsset.h"
 #import "ELCAlbumPickerController.h"
 #import "MBProgressHUD.h"
+#import "ASINetworkQueue.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "ModalController.h"
 //#define URLPOST @"http://74.53.228.211/~vodavo/webservices/addimage.php"
-
+#import "ELCAssetTablePicker.h"
+#import "ELCImagePickerController.h"
 #define URLPOST @"http://74.53.228.211/~vodavo/webservices/addimage.php?image_name=abc&event_id="
 
 
@@ -28,13 +30,19 @@
 
 @interface UploadViewController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
+    NSInteger totalHit;
+    ASINetworkQueue *myQueue;
+    IBOutlet UITableView *tblViewHome;
 
+    ELCAssetTablePicker *picker ;
     IBOutlet UIView *viewLib;
     IBOutlet UIImageView *imageViewPick;
     NSMutableArray *assetGroups;
     ALAssetsLibrary *library;
 }
 
+-(void)loadDataInTableView;
+-(IBAction)ClickToshowBtn:(id)sender;
 
 @property (nonatomic, retain) NSMutableArray *assetGroups;
 

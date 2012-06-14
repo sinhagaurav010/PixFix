@@ -10,7 +10,7 @@
 
 @implementation CatagoryView
 
-@synthesize lableName,lablePrice,imageProduct;
+@synthesize lableName,lableDate,imageProduct;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -32,7 +32,7 @@
 
 -(void)setPrice:(NSString *)price
 {
-    self.lablePrice.text = price;
+    self.lableDate.text = price;
 }
 
 -(void)setName:(NSString *)name

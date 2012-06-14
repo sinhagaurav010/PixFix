@@ -44,7 +44,8 @@
 //     addAnimation:transition forKey:kCATransition];
     
     controllertab.selectedIndex = 0;
-    [self.navigationController pushViewController: controllertab animated:NO];
+    [self.navigationController pushViewController:controllertab 
+                                         animated:NO];
 }
 //- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 //{
@@ -120,7 +121,8 @@
     modal = [[ModalController  alloc] init];
     modal.delegate = self;
 
-    [modal sendTheRequestWithPostString:nil withURLString:[NSString stringWithFormat:@"%@%@&email=%@",KsURLSIGNUP,[result  objectForKey:@"name"],[result  objectForKey:@"email"]]];
+    [modal sendTheRequestWithPostString:nil
+                          withURLString:[NSString stringWithFormat:@"%@%@&email=%@",KsURLSIGNUP,[result  objectForKey:@"name"],[result  objectForKey:@"email"]]];
     
     // [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];    
     
@@ -259,7 +261,8 @@
 
     [ModalController  saveTheContent:self.loginUser
                              withKey:KsSAVEDLOGGEDIN];
-    AddEventViewController *controller = [[AddEventViewController  alloc] init];
+    AddEventViewController *controller = [[AddEventViewController  alloc] initWithNibName:@"AddEventViewController"
+                                                                                   bundle:nil];
     [self.navigationController  pushViewController:controller
                                           animated:YES];
     
@@ -268,7 +271,8 @@
 
 -(void)getError
 {
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    [MBProgressHUD hideHUDForView:self.navigationController.view
+                         animated:YES];
     [ModalController FuncAlertMsg:@"Error in network!!!"
                      inController:self];
 }

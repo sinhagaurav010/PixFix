@@ -19,7 +19,7 @@
 
 -(void)setPrice:(NSString *)price;
 -(void)setName:(NSString *)name;
-@property(retain) IBOutlet UILabel *lablePrice;
+@property(retain) IBOutlet UILabel *lableDate;
 @property(retain) IBOutlet EGOImageView *imageProduct;
 
 @property(retain) IBOutlet UILabel *lableName;

@@ -155,7 +155,7 @@
 			[selectedAssetsImages addObject:[elcAsset asset]];
 		}
 	}
-    
+    NSLog(@"%@",selectedAssetsImages);
     return selectedAssetsImages;
     
 //    [ELCTableDelegate selectedImage:selectedAssetsImages];

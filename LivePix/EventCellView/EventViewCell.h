@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EGOImageView.h"
 
 @interface EventViewCell : UITableViewCell
+@property(retain)IBOutlet EGOImageView *imageMain;
+
+@property(retain)IBOutlet UILabel *lableName;
+@property(retain)IBOutlet UILabel *lableCreater;
 
 @end

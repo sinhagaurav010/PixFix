@@ -35,7 +35,7 @@
              forControlEvents:UIControlEventValueChanged];
 
         NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"mm-dd-yyyy"];
+        [df setDateFormat:@"yyyy-MM-dd"];
         self.stringDate = [NSString stringWithFormat:@"%@",
                       [df stringFromDate:[NSDate date]]];
 //        [df release];

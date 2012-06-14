@@ -28,24 +28,84 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+    //  should be calling your tableviews data source model to reload
+	//  put here just for demo
+	_reloading = YES;
+	
+}
+
+- (void)doneLoadingTableViewData{
+	
+	//  model should call this when its done loading
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:tableEvent];
+}
+
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+	
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	
+	[self reloadTableViewDataSource];
+    
+    [self  getEvents];
+    //	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
 #pragma mark - View lifecycle
+
 
 
 -(void)AddEvent
 {
     
- 
-    
-   UIAlertView  *myAlertView = [[UIAlertView alloc] initWithTitle:@"Add Event \n" message:@"\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-    myAlertView.tag = 199;
-    myTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)];
-    [myTextField setBackgroundColor:[UIColor whiteColor]];
-    [myAlertView addSubview:myTextField];
-    if(TARGET_IPHONE_SIMULATOR)
-    {
-        myTextField.text=@"";    //f508f9f7227c
-    }
-    [myAlertView show];
+    NewEventViewController *controller = [[NewEventViewController  alloc] init];
+    [self.navigationController  pushViewController:controller
+                                          animated:YES];
+    [controller  release];
+//   UIAlertView  *myAlertView = [[UIAlertView alloc] initWithTitle:@"Add Event \n" message:@"\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+//    myAlertView.tag = 199;
+//    myTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)];
+//    [myTextField setBackgroundColor:[UIColor whiteColor]];
+//    [myAlertView addSubview:myTextField];
+//    if(TARGET_IPHONE_SIMULATOR)
+//    {
+//        myTextField.text=@"";    //f508f9f7227c
+//    }
+//    [myAlertView show];
 //    [modal sendTheRequestWithPostString:nil withURLString:[NSString stringWithFormat:@"%@%@&email=%@",KsURLSIGNUP,[result  objectForKey:@"name"],[result  objectForKey:@"email"]]];
 //
     
@@ -80,16 +140,28 @@
                                           animated:YES];
     [ModalController  removeContentForKey:KsSAVEDLOGGEDIN];
     [controller  release];
-    
-
-
 }
 
 
 - (void)viewDidLoad
 {
-    [self.navigationController.navigationBar  setTintColor:[UIColor  blackColor]];
     
+    
+    tableEvent.backgroundView  = nil;
+    tableEvent.backgroundColor = [UIColor  clearColor];
+    
+    [self.navigationController.navigationBar  setTintColor:[UIColor  blackColor]];
+    [self.navigationItem setTitle:@"Events"];
+    
+    if (_refreshHeaderView == nil) {
+		
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableEvent.bounds.size.height, self.view.frame.size.width, tableEvent.bounds.size.height)];
+        view.backgroundColor = [UIColor clearColor];
+		view.delegate = self;
+		[tableEvent addSubview:view];
+		_refreshHeaderView = view;
+		[view release];
+	}
     
     [self.navigationController setNavigationBarHidden:NO];
     
@@ -103,9 +175,12 @@
                                                                            style:UIBarButtonItemStyleBordered 
                                                                           target:self
                                                                           action:@selector(LogOut)];
-
     
-   
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view 
+                                              animated:YES];
+    hud.labelText = @"Loading...";
+
     [self getEvents];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -114,10 +189,7 @@
 -(void)getEvents
 {
     isGet = 1;
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText = @"Loading...";
-    
+       
     modal = [[ModalController  alloc] init];
     modal.delegate = self;
     [modal  sendTheRequestWithPostString:nil withURLString:KsALLEVENT];
@@ -132,7 +204,7 @@
 //    [self.navigationController  pushViewController:controller
 //                                          animated:YES];
 
-    
+      [self doneLoadingTableViewData];
     NSLog(@"%@",modal.stringRx);
     
     if(isGet == 1)
@@ -152,7 +224,7 @@
         [arrayEvent addObject:[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"] ];
     }
 
-    [tableEvent  reloadData];
+     [tableEvent  reloadData];
     }
     else
     {
@@ -164,9 +236,10 @@
 
 -(void)getError
 {
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    [ModalController FuncAlertMsg:@"Error in network!!!"
-                     inController:self];
+        [self doneLoadingTableViewData];
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        [ModalController FuncAlertMsg:@"Error in network!!!"
+                       inController:self];
 }
 
 #pragma mark -tableview delegate-
@@ -222,16 +295,45 @@
     
     //    CustomTableCell *cell = (CustomTableCell *)[tableView dequeueReusableCellWithIdentifier:@"ListCell"];
     
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"BaseCell"];
+    EventViewCell *cell = (EventViewCell *)[tableView dequeueReusableCellWithIdentifier:@"BaseCell"];
 	if(cell == nil) 
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"BaseCell"] autorelease];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EventCellView" owner:self options:nil];
+        
+        cell = (EventViewCell *)[nib objectAtIndex:0];
     }
-    cell.textLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
-    cell.detailTextLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user"];
+    
+    
+    if(indexPath.row%2 == 0)
+    cell.contentView.backgroundColor = [UIColor  colorWithRed:(float)33/256 green:(float)33/256  blue:(float)33/256  alpha:1.0];
+    else {
+        cell.contentView.backgroundColor = [UIColor  colorWithRed:(float)102/256 green:(float)102/256  blue:(float)102/256  alpha:1.0];
+
+    }
+    cell.backgroundView = nil;
+    
+//    cell.textLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
+//    cell.detailTextLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user-name"];
+//    cell.textLabel.backgroundColor =[UIColor  clearColor ];
+//    cell.detailTextLabel.backgroundColor = [UIColor  clearColor];
+//    cell.detailTextLabel.textColor = [UIColor whiteColor];
+//    cell.textLabel.textColor = [UIColor whiteColor];
+    
+    cell.lableName.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
+    cell.lableCreater.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user-name"];
+    
+    cell.imageMain.image = [UIImage imageNamed:@"icon-placeholder.png"];
+   
+    if([[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-image-path"])
+    cell.imageMain.imageURL = [NSURL URLWithString:[[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-image-path"]];
+   
+    
+    cell.lableCreater.backgroundColor = [UIColor  clearColor];
+    cell.lableName.backgroundColor = [UIColor  clearColor];
+
     //    cell.backgroundColor = COLORCELL
-	
+	cell.accessoryView = nil;
+    cell.accessoryType = UITableViewCellAccessoryNone;
     return (UITableViewCell *)cell;
 	
 }
@@ -249,11 +351,16 @@
 //    [tabBarcont setViewControllers:
 //     [NSArray arrayWithObjects:controllerEvent, controlllerUpload, nil]];
     
-    tabBarcont.selectedIndex = 0;
-    [self.navigationController pushViewController:tabBarcont
-                                         animated:YES];
-    
-    
+//    tabBarcont.selectedIndex = 0;
+//    [self.navigationController pushViewController:tabBarcont
+//                                         animated:YES];
+//    
+
+    EventViewController *controller = [[EventViewController  alloc] init];
+    controller.stringTitle = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
+    [self.navigationController  pushViewController:controller
+                                          animated:YES];
+    [controller  release];
 }
 
 

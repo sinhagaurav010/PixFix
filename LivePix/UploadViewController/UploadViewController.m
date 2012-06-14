@@ -29,7 +29,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController  setNavigationBarHidden:YES];
+    [self.navigationController  setNavigationBarHidden:NO];
 }
 #pragma mark - View lifecycle
 
@@ -38,12 +38,91 @@
 //    [self.view setHidden:YES];
     self.navigationItem.title = @"Upload";
     [self.navigationController.navigationBar  setTintColor:[UIColor blackColor]];
+    
+    picker = [[ELCAssetTablePicker alloc] init];
+    picker.ELCTableDelegate=self;
+    tblViewHome.delegate = picker;
+    tblViewHome.dataSource = picker;
+    [picker getImagesFromPhotoLibrary];
+    [NSTimer scheduledTimerWithTimeInterval:1.0 
+                                     target:self 
+                                   selector:@selector(loadDataInTableView) 
+                                   userInfo:nil 
+                                    repeats:NO];
+    
+    
     [super viewDidLoad];
     
     
 //    [self getImagesFromPhotoLibrary];
     // Do any additional setup after loading the view from its nib.
 }
+
+-(void)loadDataInTableView
+{
+    [tblViewHome reloadData];
+    
+}
+#pragma mark ELCImagePickerControllerDelegate Methods
+
+- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info {
+	NSLog(@"******info=%@",info);
+	
+}
+//
+//- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker {
+//    
+//	[self dismissModalViewControllerAnimated:YES];
+//}
+
+
+-(IBAction)ClickToshowBtn:(id)sender
+{
+    
+    myQueue = [[ASINetworkQueue alloc] init];   
+    [myQueue cancelAllOperations];
+    [myQueue setDelegate:self];
+    [myQueue setRequestDidFinishSelector:@selector(topSecretFetchComplete:)];
+    [myQueue setRequestDidFailSelector:@selector(topSecretFetchFailed:)];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = @"Uploading...";
+    
+    int i;
+   totalHit = [[picker  selection] count];
+    for (i=0; i<[[picker  selection] count]; i++) 
+    { 
+        ALAsset *assetImage = [[picker  selection] objectAtIndex:i];
+        NSLog(@"%@",assetImage.defaultRepresentation);
+        NSData *imageData = UIImageJPEGRepresentation([UIImage imageWithCGImage:[[assetImage defaultRepresentation] fullResolutionImage]], 0.5);
+        ASIFormDataRequest *currentRequest = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&user_email=%@",URLPOST,[ModalController  getContforKey:KsSELEVENT],[ModalController  getContforKey:KsSAVEDLOGGEDIN]]]];
+        
+        [currentRequest setPostFormat:ASIMultipartFormDataPostFormat];
+        [currentRequest addRequestHeader:@"Content-Type" value:@"multipart/form-data"];
+        [currentRequest setRequestMethod:@"POST"];
+        
+        NSString *encodedString = [imageData base64Encoding];
+        
+        [currentRequest setPostValue:encodedString forKey:@"file"];
+        
+        //    [currentRequest  setData:imageData forKey:@"file"];
+        currentRequest.delegate = self;    
+//        [currentRequest setDidFinishSelector:@selector(topSecretFetchComplete:)];
+//        [currentRequest setDidFailSelector:@selector(topSecretFetchFailed:)];
+        
+        //         [currentRequest startAsynchronous];
+        [myQueue addOperation:currentRequest];
+    }
+    [myQueue go];
+
+
+}
+-(void)selectedImage:(NSArray *)arraySelImg
+{
+        
+
+}
+
 
 - (IBAction)topSecretFetchFailed:(ASIHTTPRequest *)theRequest
 {
@@ -74,20 +153,27 @@
 - (IBAction)topSecretFetchComplete:(ASIHTTPRequest *)theRequest
 {
     NSLog(@"complete -%@",[theRequest responseString]);
-    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     
 //    NSDictionary * dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:[theRequest  responseData] error:nil]; 
     
 //    NSLog(@"%@",dictionary);
 //    NSString *strMsg = [NSString stringWithFormat:@"Error = %@ \n pid = %@ \n Strength = %@ \n update = %@ \n errormsg = %@",[dictionary objectForKey:@"error"],[dictionary  objectForKey:@"pid"],[dictionary  objectForKey:@"strength"],[dictionary  objectForKey:@"updated"],[dictionary  objectForKey:@"errormsg"]];
+    static NSInteger countimage = 0;
+    countimage++;
     
-    UIAlertView *alert = [[UIAlertView  alloc] initWithTitle:@"Info" 
-                                                     message:[theRequest responseString]
-                                                    delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles: nil];
-    [alert show];
-    [alert  release];
+    if(totalHit == countimage)
+    {
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+//    UIAlertView *alert = [[UIAlertView  alloc] initWithTitle:@"Info" 
+//                                                     message:[theRequest responseString]
+//                                                    delegate:self
+//                                           cancelButtonTitle:@"OK"
+//                                           otherButtonTitles: nil];
+//    [alert show];
+//    [alert  release];
 }
 
 -(IBAction)camera:(id)sender
@@ -156,36 +242,18 @@
 }
 -(IBAction)upload:(id)sender
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText = @"Uploading...";
+    
+        
     
     
-    
-    NSData *imageData = UIImageJPEGRepresentation(imageViewPick.image, 0.5);
    
-    NSString *stringUrl ;
+   
+//    NSString *stringUrl ;
+//    
+////    if(TESTING)
+//        stringUrl = URLPOST;
     
-//    if(TESTING)
-        stringUrl = URLPOST;
     
-    ASIFormDataRequest *currentRequest = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&user_email=%@",URLPOST,[ModalController  getContforKey:KsSELEVENT],[ModalController  getContforKey:KsSAVEDLOGGEDIN]]]];
-    
-    [currentRequest setPostFormat:ASIMultipartFormDataPostFormat];
-    [currentRequest addRequestHeader:@"Content-Type" value:@"multipart/form-data"];
-    [currentRequest setRequestMethod:@"POST"];
-    
-    NSString *encodedString = [imageData base64Encoding];
-    
-    NSLog(@"%@",encodedString);
-    [currentRequest setPostValue:encodedString forKey:@"file"];
-
-//    [currentRequest  setData:imageData forKey:@"file"];
-    currentRequest.delegate = self;    
-    [currentRequest setDidFinishSelector:@selector(topSecretFetchComplete:)];
-    [currentRequest setDidFailSelector:@selector(topSecretFetchFailed:)];
-    
-    [currentRequest startAsynchronous];
-
     
 //    else
 //        stringUrl = [NSString stringWithFormat:@"%@:%@/%@/image",[ModalController  getContforKey:SERVERHOST],[ModalController  getContforKey:SERVERPORT],[ModalController  getContforKey:SERVERVERSION]];
@@ -408,29 +476,29 @@
                    }); 
     
 }
--(void)goNextViewController
-{
-    ELCAssetTablePicker *picker = [[ELCAssetTablePicker alloc] initWithNibName:@"ELCAssetTablePicker" bundle:[NSBundle mainBundle]];
-	picker.parent = self;
-    
-    // Move me    
-    picker.assetGroup = [assetGroups objectAtIndex:0];
-    [picker.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-
-    [picker getImagesFromPhotoLibrary];
-
-    [self.view  addSubview:picker.view];
-    
-//	[self.navigationController pushViewController:picker animated:YES];
-//	[picker release];
-}
+//-(void)goNextViewController
+//{
+//    ELCAssetTablePicker *picker = [[ELCAssetTablePicker alloc] initWithNibName:@"ELCAssetTablePicker" bundle:[NSBundle mainBundle]];
+//	picker.parent = self;
+//    
+//    // Move me    
+//    picker.assetGroup = [assetGroups objectAtIndex:0];
+//    [picker.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
+//
+//    [picker getImagesFromPhotoLibrary];
+//
+//    [self.view  addSubview:picker.view];
+//    
+////	[self.navigationController pushViewController:picker animated:YES];
+////	[picker release];
+//}
 
 #pragma mark ELCImagePickerControllerDelegate Methods
 
-- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info {
-	NSLog(@"******info=%@",info);
-	
-}
+//- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info {
+//	NSLog(@"******info=%@",info);
+//	
+//}
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker {
     

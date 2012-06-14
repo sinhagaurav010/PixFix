@@ -48,7 +48,8 @@ NSString * const facebookExpirationDateKey = @"facebookExpirationDate";
     self.navigation = [[UINavigationController  alloc] initWithRootViewController:self.SplashController];
     else
     {
-        self.AddEventController = [[AddEventViewController  alloc] init];
+        self.AddEventController = [[AddEventViewController  alloc] initWithNibName:@"AddEventViewController"
+                                                                            bundle:nil];
         self.navigation  = [[UINavigationController  alloc] initWithRootViewController:self.AddEventController];
     }
     
