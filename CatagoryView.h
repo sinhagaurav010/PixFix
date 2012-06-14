@@ -1,9 +1,9 @@
 //
 //  CatagoryView.h
-//  viaprive
+//  
 //
-//  Created by preet dhillon on 31/03/12.
-//  Copyright (c) 2012 dhillon. All rights reserved.
+//  Created by    on 31/03/12.
+//  Copyright (c)  . All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

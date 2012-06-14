@@ -2,8 +2,8 @@
 //  SplashScreenController.m
 //  LivePix
 //
-//  Created by preet dhillon on 08/06/12.
-//  Copyright (c) 2012 dhillon. All rights reserved.
+//  Created by    on 08/06/12.
+//  Copyright (c)  . All rights reserved.
 //
 
 #import "SplashScreenController.h"

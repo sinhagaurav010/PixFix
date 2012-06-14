@@ -2,8 +2,8 @@
 //  EventViewController.m
 //  LivePix
 //
-//  Created by preet dhillon on 08/06/12.
-//  Copyright (c) 2012 dhillon. All rights reserved.
+//  Created by    on 08/06/12.
+//  Copyright (c)  . All rights reserved.
 //
 
 #import "EventViewController.h"
@@ -71,7 +71,7 @@
         [imageEvet  addGestureRecognizer:gesture];
         
         imageEvet.imageURL = [NSURL  URLWithString:[[arrayimages  objectAtIndex:i] 
-                                      objectForKey:@"image-path"]];
+                                      objectForKey:@"image-thumb"]];
         [scrollEventImages  addSubview:imageEvet];
         
         if((i+1)%3==0)

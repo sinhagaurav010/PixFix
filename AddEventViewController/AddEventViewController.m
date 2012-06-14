@@ -2,8 +2,8 @@
 //  AddEventViewController.m
 //  LivePix
 //
-//  Created by preet dhillon on 10/06/12.
-//  Copyright (c) 2012 dhillon. All rights reserved.
+//  Created by    on 10/06/12.
+//  Copyright (c)  . All rights reserved.
 //
 
 #import "AddEventViewController.h"
