@@ -9,7 +9,7 @@
 #import "UploadViewController.h"
 
 @implementation UploadViewController
-@synthesize assetGroups;
+@synthesize assetGroups,arrayAsset;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,7 +32,7 @@
     [self.navigationController  setNavigationBarHidden:NO];
 }
 #pragma mark - View lifecycle
-
+ 
 - (void)viewDidLoad
 {
 //    [self.view setHidden:YES];
@@ -89,37 +89,49 @@
     hud.labelText = @"Uploading...";
     
     int i;
-   totalHit = [[picker  selection] count];
-    for (i=0; i<[[picker  selection] count]; i++) 
-    { 
-        ALAsset *assetImage = [[picker  selection] objectAtIndex:i];
-        NSLog(@"%@",assetImage.defaultRepresentation);
-        NSData *imageData = UIImageJPEGRepresentation([UIImage imageWithCGImage:[[assetImage defaultRepresentation] fullResolutionImage]], 0.5);
-        ASIFormDataRequest *currentRequest = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&user_email=%@",URLPOST,[ModalController  getContforKey:KsSELEVENT],[ModalController  getContforKey:KsSAVEDLOGGEDIN]]]];
-        
-        [currentRequest setPostFormat:ASIMultipartFormDataPostFormat];
-        [currentRequest addRequestHeader:@"Content-Type" value:@"multipart/form-data"];
-        [currentRequest setRequestMethod:@"POST"];
-        
-        NSString *encodedString = [imageData base64Encoding];
-        
-        [currentRequest setPostValue:encodedString forKey:@"file"];
-        
-        //    [currentRequest  setData:imageData forKey:@"file"];
-        currentRequest.delegate = self;    
-//        [currentRequest setDidFinishSelector:@selector(topSecretFetchComplete:)];
+    
+    self.arrayAsset = [[NSMutableArray  alloc] initWithArray:[picker  selection]];
+    
+    totalHit = [self.arrayAsset count];
+    
+    if([self.arrayAsset count]>0)
+        [self  hitUrl:0];
+//    for (i=0; i<[self.arrayAsset count]; i++) 
+//    { 
+       //        [currentRequest setDidFinishSelector:@selector(topSecretFetchComplete:)];
 //        [currentRequest setDidFailSelector:@selector(topSecretFetchFailed:)];
         
         //         [currentRequest startAsynchronous];
-        [myQueue addOperation:currentRequest];
-    }
-    [myQueue go];
+//        [myQueue addOperation:currentRequest];
+//    }
+//    [myQueue go];
+}
 
+-(void)hitUrl:(NSInteger)index
+{
+    ALAsset *assetImage = [self.arrayAsset objectAtIndex:index];
+    NSLog(@"%@",assetImage.defaultRepresentation);
+    NSData *imageData = UIImageJPEGRepresentation([UIImage imageWithCGImage:[[assetImage defaultRepresentation] fullResolutionImage]], 0.5);
+    ASIFormDataRequest *currentRequest = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@&user_email=%@",URLPOST,[ModalController  getContforKey:KsSELEVENT],[ModalController  getContforKey:KsSAVEDLOGGEDIN]]]];
+    
+    [currentRequest setPostFormat:ASIMultipartFormDataPostFormat];
+    [currentRequest addRequestHeader:@"Content-Type" value:@"multipart/form-data"];
+    [currentRequest setRequestMethod:@"POST"];
+    
+    NSString *encodedString = [imageData base64Encoding];
+    
+    [currentRequest setPostValue:encodedString forKey:@"file"];
+    
+    
+    [currentRequest setDidFinishSelector:@selector(topSecretFetchComplete:)];
+    [currentRequest setDidFailSelector:@selector(topSecretFetchFailed:)];
 
+    //    [currentRequest  setData:imageData forKey:@"file"];
+    currentRequest.delegate = self;    
+    [currentRequest  startAsynchronous];
 }
 -(void)selectedImage:(NSArray *)arraySelImg
 {
-        
 
 }
 
@@ -166,6 +178,9 @@
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
 
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        [self hitUrl:countimage];
     }
 //    UIAlertView *alert = [[UIAlertView  alloc] initWithTitle:@"Info" 
 //                                                     message:[theRequest responseString]

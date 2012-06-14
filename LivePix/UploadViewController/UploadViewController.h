@@ -40,6 +40,9 @@
     NSMutableArray *assetGroups;
     ALAssetsLibrary *library;
 }
+-(void)hitUrl:(NSInteger)index;
+
+@property(retain)NSMutableArray *arrayAsset;
 
 -(void)loadDataInTableView;
 -(IBAction)ClickToshowBtn:(id)sender;
