@@ -8,8 +8,13 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+@protocol ELCAssestTableDataSource <NSObject>
+
+-(void)selectedImage:(NSArray *)arraySelImg;
+@end
 @interface ELCAssetTablePicker : UITableViewController
 {
+    id <ELCAssestTableDataSource>ELCTableDelegate;
 	ALAssetsGroup *assetGroup;
 	
 	NSMutableArray *elcAssets;
@@ -22,12 +27,14 @@
     NSMutableArray *assetGroups;
     ALAssetsLibrary *library;
 }
+@property (retain,nonatomic) id <ELCAssestTableDataSource>ELCTableDelegate;
 @property (nonatomic, retain) NSMutableArray *assetGroups;
 @property (nonatomic, assign) id parent;
 @property (nonatomic, assign) ALAssetsGroup *assetGroup;
 @property (nonatomic, retain) NSMutableArray *elcAssets;
 @property (nonatomic, retain) IBOutlet UILabel *selectedAssetsLabel;
 
+- (NSMutableArray *) selection; 
 -(int)totalSelectedAssets;
 -(void)preparePhotos;
 

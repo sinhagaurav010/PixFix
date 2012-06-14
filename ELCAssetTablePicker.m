@@ -15,7 +15,7 @@
 
 @synthesize parent;
 @synthesize selectedAssetsLabel;
-@synthesize assetGroup, elcAssets,assetGroups;
+@synthesize assetGroup, elcAssets,assetGroups,ELCTableDelegate;
 #pragma mark- user defined functions
 
 -(void)getImagesFromPhotoLibrary
@@ -96,7 +96,7 @@
 
 
 -(void)viewDidLoad {
-    [self getImagesFromPhotoLibrary];
+  //  [self getImagesFromPhotoLibrary];
     
 //	[self.tableView setSeparatorColor:[UIColor clearColor]];
 //	[self.tableView setAllowsSelection:NO];
@@ -142,7 +142,10 @@
 }
 
 - (void) doneAction:(id)sender {
-	
+}
+
+- (NSMutableArray *) selection {
+	NSLog(@"%s",__PRETTY_FUNCTION__);
 	NSMutableArray *selectedAssetsImages = [[[NSMutableArray alloc] init] autorelease];
 	    
 	for(ELCAsset *elcAsset in self.elcAssets) 
@@ -152,8 +155,11 @@
 			[selectedAssetsImages addObject:[elcAsset asset]];
 		}
 	}
-        
-    [(ELCAlbumPickerController*)self.parent selectedAssets:selectedAssetsImages];
+    
+    return selectedAssetsImages;
+    
+//    [ELCTableDelegate selectedImage:selectedAssetsImages];
+//    [(ELCAlbumPickerController*)self.parent selectedAssets:selectedAssetsImages];
 }
 
 #pragma mark UITableViewDataSource Delegate Methods
@@ -169,7 +175,7 @@
 }
 
 - (NSArray*)assetsForIndexPath:(NSIndexPath*)_indexPath {
-    
+   
 	int index = (_indexPath.row*4);
 	int maxIndex = (_indexPath.row*4+3);
     
@@ -232,7 +238,7 @@
 }
 
 - (int)totalSelectedAssets {
-    
+    NSLog(@"totalSelectedAssets");
     int count = 0;
     
     for(ELCAsset *asset in self.elcAssets) 
