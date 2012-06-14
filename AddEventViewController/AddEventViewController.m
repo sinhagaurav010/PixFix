@@ -186,6 +186,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+
 -(void)getEvents
 {
     isGet = 1;
@@ -194,6 +195,8 @@
     modal.delegate = self;
     [modal  sendTheRequestWithPostString:nil withURLString:KsALLEVENT];
 }
+
+
 -(void)getdata
 {
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
@@ -246,7 +249,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 55;
+    return 60;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	// The number of sections is based on the number of items in the data property list.

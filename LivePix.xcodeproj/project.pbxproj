@@ -830,14 +830,14 @@
 		5DE32FB215814AA900733C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tapan Sinha (JQVPP4KWA4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tapan Sinha (JQVPP4KWA4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas De Vos (A73Y5XTQUY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas De Vos (A73Y5XTQUY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LivePix/LivePix-Prefix.pch";
 				INFOPLIST_FILE = "LivePix/LivePix-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8D963600-5E29-459A-ACC6-F9201AA90341";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D963600-5E29-459A-ACC6-F9201AA90341";
+				PROVISIONING_PROFILE = "FB7F1E4D-A7D0-4CFA-86C8-0B6BF39942FF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FB7F1E4D-A7D0-4CFA-86C8-0B6BF39942FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -845,14 +845,14 @@
 		5DE32FB315814AA900733C0E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tapan Sinha (JQVPP4KWA4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tapan Sinha (JQVPP4KWA4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas De Vos (A73Y5XTQUY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thomas De Vos (A73Y5XTQUY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LivePix/LivePix-Prefix.pch";
 				INFOPLIST_FILE = "LivePix/LivePix-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8D963600-5E29-459A-ACC6-F9201AA90341";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D963600-5E29-459A-ACC6-F9201AA90341";
+				PROVISIONING_PROFILE = "FB7F1E4D-A7D0-4CFA-86C8-0B6BF39942FF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FB7F1E4D-A7D0-4CFA-86C8-0B6BF39942FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
