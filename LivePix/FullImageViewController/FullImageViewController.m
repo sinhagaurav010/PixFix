@@ -50,7 +50,6 @@
         eventImage.lableDate.text = [[self.arrayImageUrl  objectAtIndex:i] objectForKey:@"image-date"];//
         incX+= 320;
         [self.scrollImages  addSubview:eventImage];
-        
     }
     labelName.text = [self.dictImage objectForKey:@"image-name"];
     [self.scrollImages setContentOffset:CGPointMake(selectedIndex*320, 0)];

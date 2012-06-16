@@ -19,6 +19,10 @@
 		18C115761584B4C5005139CF /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C1156F1584B4C5005139CF /* FBDialog.m */; };
 		18C115771584B4C5005139CF /* FBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C115711584B4C5005139CF /* FBLoginDialog.m */; };
 		18C115781584B4C5005139CF /* FBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C115731584B4C5005139CF /* FBRequest.m */; };
+		18D825FD158CDC7700228845 /* FBFriendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D825FC158CDC7700228845 /* FBFriendView.m */; };
+		18D82601158CDD2100228845 /* FBFriendBiew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D82600158CDD2100228845 /* FBFriendBiew.xib */; };
+		18D82605158CE03F00228845 /* InviteFriendViewControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D82603158CE03F00228845 /* InviteFriendViewControllerViewController.m */; };
+		18D82606158CE03F00228845 /* InviteFriendViewControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D82604158CE03F00228845 /* InviteFriendViewControllerViewController.xib */; };
 		18D97C9815877AC7004572B4 /* NewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D97C9615877AC6004572B4 /* NewEventViewController.m */; };
 		18D97C9915877AC7004572B4 /* NewEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D97C9715877AC6004572B4 /* NewEventViewController.xib */; };
 		18D97CAA15878A58004572B4 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D97CA915878A58004572B4 /* EGORefreshTableHeaderView.m */; };
@@ -116,6 +120,12 @@
 		18C115711584B4C5005139CF /* FBLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBLoginDialog.m; sourceTree = "<group>"; };
 		18C115721584B4C5005139CF /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBRequest.h; sourceTree = "<group>"; };
 		18C115731584B4C5005139CF /* FBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBRequest.m; sourceTree = "<group>"; };
+		18D825FB158CDC7700228845 /* FBFriendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBFriendView.h; path = FBFriendView/FBFriendView.h; sourceTree = "<group>"; };
+		18D825FC158CDC7700228845 /* FBFriendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBFriendView.m; path = FBFriendView/FBFriendView.m; sourceTree = "<group>"; };
+		18D82600158CDD2100228845 /* FBFriendBiew.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FBFriendBiew.xib; sourceTree = "<group>"; };
+		18D82602158CE03F00228845 /* InviteFriendViewControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteFriendViewControllerViewController.h; path = InviteFriendViewController/InviteFriendViewControllerViewController.h; sourceTree = "<group>"; };
+		18D82603158CE03F00228845 /* InviteFriendViewControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InviteFriendViewControllerViewController.m; path = InviteFriendViewController/InviteFriendViewControllerViewController.m; sourceTree = "<group>"; };
+		18D82604158CE03F00228845 /* InviteFriendViewControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InviteFriendViewControllerViewController.xib; path = InviteFriendViewController/InviteFriendViewControllerViewController.xib; sourceTree = "<group>"; };
 		18D97C9515877AC6004572B4 /* NewEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEventViewController.h; sourceTree = "<group>"; };
 		18D97C9615877AC6004572B4 /* NewEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewEventViewController.m; sourceTree = "<group>"; };
 		18D97C9715877AC6004572B4 /* NewEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewEventViewController.xib; sourceTree = "<group>"; };
@@ -284,6 +294,42 @@
 			name = CatagoryView;
 			sourceTree = "<group>";
 		};
+		18D825FE158CDC7C00228845 /* FBFriendView */ = {
+			isa = PBXGroup;
+			children = (
+				18D825FB158CDC7700228845 /* FBFriendView.h */,
+				18D82600158CDD2100228845 /* FBFriendBiew.xib */,
+				18D825FC158CDC7700228845 /* FBFriendView.m */,
+			);
+			name = FBFriendView;
+			path = LivePix;
+			sourceTree = "<group>";
+		};
+		18D825FF158CDCD800228845 /* ImagesLiveFix */ = {
+			isa = PBXGroup;
+			children = (
+				181BCA031587E079004D6E36 /* Default.png */,
+				181BCA041587E079004D6E36 /* Default@2x.png */,
+				181AA53115867DA300EA1A9A /* icon-placeholder.png */,
+				18F1D2431583F3F900B4E9A9 /* NSData+Base64.m */,
+				18F1D2441583F3F900B4E9A9 /* NSData+Base64.h */,
+				5DE32FFC1581617B00733C0E /* magetest.png */,
+				5D9636B01585207200CF429A /* expiring_assets_count.png */,
+				5DE3300C158172B900733C0E /* icon.png */,
+			);
+			name = ImagesLiveFix;
+			sourceTree = "<group>";
+		};
+		18D82607158CE04300228845 /* InviteFriendViewControllerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				18D82602158CE03F00228845 /* InviteFriendViewControllerViewController.h */,
+				18D82603158CE03F00228845 /* InviteFriendViewControllerViewController.m */,
+				18D82604158CE03F00228845 /* InviteFriendViewControllerViewController.xib */,
+			);
+			name = InviteFriendViewControllerViewController;
+			sourceTree = "<group>";
+		};
 		18D97C9A15877ACB004572B4 /* NewEventViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -363,6 +409,7 @@
 		18F1D2D715840DBA00B4E9A9 /* FaceBook */ = {
 			isa = PBXGroup;
 			children = (
+				18D825FE158CDC7C00228845 /* FBFriendView */,
 				18C115691584B4C5005139CF /* facebook_ios_sdk_Prefix.pch */,
 				18C1156A1584B4C5005139CF /* Facebook.h */,
 				18C1156B1584B4C5005139CF /* FBDialog.bundle */,
@@ -456,6 +503,7 @@
 		5DE32F8E15814AA900733C0E = {
 			isa = PBXGroup;
 			children = (
+				18D82607158CE04300228845 /* InviteFriendViewControllerViewController */,
 				18E3FA5415890FE500A2D254 /* CustomDatePickerView */,
 				18D97CAB15878A5C004572B4 /* EGORefreshTableHeaderView */,
 				18D97C9A15877ACB004572B4 /* NewEventViewController */,
@@ -498,14 +546,7 @@
 		5DE32FA315814AA900733C0E /* LivePix */ = {
 			isa = PBXGroup;
 			children = (
-				181BCA031587E079004D6E36 /* Default.png */,
-				181BCA041587E079004D6E36 /* Default@2x.png */,
-				181AA53115867DA300EA1A9A /* icon-placeholder.png */,
-				18F1D2431583F3F900B4E9A9 /* NSData+Base64.m */,
-				18F1D2441583F3F900B4E9A9 /* NSData+Base64.h */,
-				5DE32FFC1581617B00733C0E /* magetest.png */,
-				5D9636B01585207200CF429A /* expiring_assets_count.png */,
-				5DE3300C158172B900733C0E /* icon.png */,
+				18D825FF158CDCD800228845 /* ImagesLiveFix */,
 				5DE32FF715815DF400733C0E /* ASIHTTP */,
 				5DE32FD61581518C00733C0E /* MBProgressHUD */,
 				5DE32FAC15814AA900733C0E /* AppDelegate.h */,
@@ -705,6 +746,8 @@
 				181BCA051587E079004D6E36 /* Default.png in Resources */,
 				181BCA061587E079004D6E36 /* Default@2x.png in Resources */,
 				1C831126158A0D25002F2991 /* EventCellView.xib in Resources */,
+				18D82601158CDD2100228845 /* FBFriendBiew.xib in Resources */,
+				18D82606158CE03F00228845 /* InviteFriendViewControllerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,6 +804,8 @@
 				18D97CAA15878A58004572B4 /* EGORefreshTableHeaderView.m in Sources */,
 				18E3FA5215890FDE00A2D254 /* CustomDatePickerView.m in Sources */,
 				1C83111E158A0C21002F2991 /* EventViewCell.m in Sources */,
+				18D825FD158CDC7700228845 /* FBFriendView.m in Sources */,
+				18D82605158CE03F00228845 /* InviteFriendViewControllerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -799,8 +844,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "8D963600-5E29-459A-ACC6-F9201AA90341";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D963600-5E29-459A-ACC6-F9201AA90341";
+				PROVISIONING_PROFILE = "537701A1-7B14-446F-9C00-F0692E780A6E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "537701A1-7B14-446F-9C00-F0692E780A6E";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -820,8 +865,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "8D963600-5E29-459A-ACC6-F9201AA90341";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D963600-5E29-459A-ACC6-F9201AA90341";
+				PROVISIONING_PROFILE = "537701A1-7B14-446F-9C00-F0692E780A6E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "537701A1-7B14-446F-9C00-F0692E780A6E";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -836,8 +881,8 @@
 				GCC_PREFIX_HEADER = "LivePix/LivePix-Prefix.pch";
 				INFOPLIST_FILE = "LivePix/LivePix-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8D963600-5E29-459A-ACC6-F9201AA90341";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D963600-5E29-459A-ACC6-F9201AA90341";
+				PROVISIONING_PROFILE = "537701A1-7B14-446F-9C00-F0692E780A6E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "537701A1-7B14-446F-9C00-F0692E780A6E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -851,8 +896,8 @@
 				GCC_PREFIX_HEADER = "LivePix/LivePix-Prefix.pch";
 				INFOPLIST_FILE = "LivePix/LivePix-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8D963600-5E29-459A-ACC6-F9201AA90341";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D963600-5E29-459A-ACC6-F9201AA90341";
+				PROVISIONING_PROFILE = "537701A1-7B14-446F-9C00-F0692E780A6E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "537701A1-7B14-446F-9C00-F0692E780A6E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

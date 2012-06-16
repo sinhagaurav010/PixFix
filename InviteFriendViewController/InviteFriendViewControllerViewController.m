@@ -1,20 +1,22 @@
 //
-//  LoginViewControllerViewController.m
+//  InviteFriendViewControllerViewController.m
 //  LivePix
 //
-//  Created by Apple on 10/06/12.
-//  Copyright (c)  . All rights reserved.
+//  Created by Apple on 16/06/12.
+//  Copyright (c) 2012 dhillon. All rights reserved.
 //
 
-#import "LoginViewControllerViewController.h"
+#import "InviteFriendViewControllerViewController.h"
 
-@interface LoginViewControllerViewController ()
+@interface InviteFriendViewControllerViewController ()
 
 @end
 
-@implementation LoginViewControllerViewController
 
--  (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+@implementation InviteFriendViewControllerViewController
+@synthesize inviteFriendDict;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {

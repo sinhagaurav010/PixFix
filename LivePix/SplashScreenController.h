@@ -18,6 +18,7 @@
 @interface SplashScreenController : UIViewController<ModalDelegate>
 
 {
+    BOOL isLogin;
     CLLocationManager *mangLoc;
     IBOutlet UITabBarController *controllertab;
     NSArray* _permissions;

@@ -17,14 +17,15 @@
 #import "EGORefreshTableHeaderView.h"
 #import "EventViewCell.h"
 
-@interface AddEventViewController : UIViewController<ModalDelegate,EGORefreshTableHeaderDelegate>
+@interface AddEventViewController : UIViewController<ModalDelegate,EGORefreshTableHeaderDelegate,EventCellDelegate>
 {
     BOOL _reloading;
 
     EGORefreshTableHeaderView *_refreshHeaderView;
-
+    NSInteger indexToDel;
+    
     ModalController *modal;
-    BOOL isGet;
+    NSInteger isGet;
     IBOutlet UITableView *tableEvent;
     UITextField *myTextField;
     

@@ -5,7 +5,14 @@
 //  Created by    on 08/06/12.
 //  Copyright (c)  . All rights reserved.
 //
-
+/*event-date" = "2012-06-12";
+ "event-description" = "this is a party";
+ "event-id" = 13;
+ "event-image-path" = "http://74.53.228.211/~vodavo/webservices/app_event_images/1339523580img.jpg";
+ "event-name" = "ants badly party";
+ "event-user" = "michaelplasse@gmail.com";
+ "event-user-name" = "Michael Plasse";
+ */
 #import "EventViewController.h"
 
 @implementation EventViewController
@@ -30,6 +37,9 @@
 
 -(void)getdata
 {
+    
+    if(isdel == 0)
+    {
     scrollEventImages = [[UIScrollView  alloc] initWithFrame:frameScrl];
     [self.view  addSubview:scrollEventImages];
     [MBProgressHUD hideHUDForView:self.navigationController.view 
@@ -39,8 +49,10 @@
                                                                   error:nil] retain];
     NSLog(@"%@",_xmlDictionaryData);
     
+
     if(![[_xmlDictionaryData  objectForKey:@"images"] isEqualToString:@"Image Not Found"])
     {
+        
     if([[[_xmlDictionaryData objectForKey:@"event-images"] objectForKey:@"images"] isKindOfClass:[NSArray  class]])
     {
         arrayimages = [[NSMutableArray  alloc] initWithArray:[[_xmlDictionaryData objectForKey:@"event-images"] objectForKey:@"images"]];
@@ -74,6 +86,15 @@
                                       objectForKey:@"image-thumb"]];
         [scrollEventImages  addSubview:imageEvet];
         
+        UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc]
+                                                          initWithTarget:self
+                                                          action:@selector(handleLongPressGesture:)];
+        
+        
+        //longPressGesture.minimumPressDuration = 2.0;
+        [imageEvet addGestureRecognizer:longPressGesture];
+
+        
         if((i+1)%3==0)
         {
             incY += 103;
@@ -87,7 +108,51 @@
     {
         [ModalController  FuncAlertMsg:@"No image Found!" inController:self];
     } 
+        
+    }
+    else 
+    {
+       if([modal.stringRx rangeOfString:@"Image was deleted"].length>0)
+       {
+           [ModalController  FuncAlertMsg:@"Image was deleted" inController:self];
+           [self  refresh];
+       }
+       else 
+       {
+           [ModalController  FuncAlertMsg:@"Image was not deleted" inController:self];
+
+       }
+    }
 }
+
+
+-(void)handleLongPressGesture:(UILongPressGestureRecognizer*)sender 
+{
+    if([[[self.arrayimages    objectAtIndex:sender.view.tag] objectForKey:@"image-creator"] isEqualToString:[ModalController  getContforKey:KsSAVEDID]])
+    if(UIGestureRecognizerStateEnded == sender.state)
+    {
+        indexTag = [sender   view].tag;
+        isdel = 1;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Do you want to delete this Image"
+                                                        message:nil 
+                                                       delegate:self 
+                                              cancelButtonTitle:nil 
+                                              otherButtonTitles:@"YES",@"NO", nil];
+        alert.tag = 1299;
+        [alert show];
+        [alert release];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+if(alertView.tag == 1299)
+{
+    [modal  sendTheRequestWithPostString:nil 
+                           withURLString:[NSString stringWithFormat:KsDeleteImage,[[arrayimages  objectAtIndex:indexTag]objectForKey:@"image-id"],[ModalController getContforKey:KsSAVEDID]]];   
+}
+}
+
 
 -(void)tapImage:(UITapGestureRecognizer *)rec
 {
@@ -177,27 +242,22 @@
 
 - (void)login {
     NSLog(@"Login Press");
+    if(![_facebook isSessionValid])
     [_facebook authorize:_permissions 
                 delegate:self];
+    else {
+        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       @"Come check out Live pic app.", @"message",
+                                       nil];
+        
+        [_facebook dialog:@"apprequests"
+                andParams:params
+              andDelegate:self];
+    }
 }
 
 
 
-
-/**
- * Called when a request returns and its response has been parsed into
- * an object. The resulting object may be a dictionary, an array, a string,
- * or a number, depending on the format of the API response. If you need access
- * to the raw response, use:
- *
- * (void)request:(FBRequest *)request
- *      didReceiveResponse:(NSURLResponse *)response
- */
-
-/**
- * Called when an error prevents the Facebook API request from completing
- * successfully.
- */
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
     //    [MBProgressHUD hideHUDForView:self.navigationController.view
     //                         animated:YES];
@@ -209,18 +269,15 @@
     
     NSLog(@"fbLogin");
     
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//    hud.labelText = @"Loading...";
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view 
+                                              animated:YES];
+    hud.labelText = @"Loading...";
 //    
 //    [_facebook requestWithGraphPath:@"me" 
 //                        andDelegate:self];
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"Come check out Live pic app.", @"message",
-                                   nil];
-    
-    [_facebook dialog:@"apprequests"
-            andParams:params
-          andDelegate:self];
+    [_facebook requestWithGraphPath:@"me/friends" 
+                         andParams:[ NSMutableDictionary dictionaryWithObjectsAndKeys:@"picture,id,name,link,gender,last_name,first_name",@"fields",nil]
+                       andDelegate:self];
 
     
     // FBRequest *request = [[FBRequest alloc] init];
@@ -238,6 +295,37 @@
     //    
     //    [_facebook requestWithMethodName:@"stream.publish" andParams:variables andHttpMethod:@"POST" andDelegate:self];
 }
+
+
+
+- (void)request:(FBRequest *)request didLoad:(id)result
+{
+    [MBProgressHUD  hideHUDForView:self.navigationController.view 
+                          animated:YES];
+    
+    InviteFriendViewControllerViewController *controller = [[InviteFriendViewControllerViewController  alloc] init];
+    controller.inviteFriendDict = [NSMutableDictionary  dictionaryWithDictionary:result];
+    
+    [self.navigationController  pushViewController:controller
+                                          animated:YES];
+    
+    NSLog(@"~~~~~~~~~~~~%@",result);
+}
+
+//- (void)dialogDidNotCompleteWithUrl:(NSURL *)url
+//{
+//    NSLog(@"%@",url);
+//}
+//- (void) dialogCompleteWithUrl:(NSURL*) url
+//{
+//    NSLog(@"%@",url);
+//    
+//    if ([url.absoluteString rangeOfString:@"post_id="].location != NSNotFound) {
+//        //alert user of successful post
+//    } else {
+//        //user pressed "cancel"
+//    }
+//}
 /**
  * Called when the user canceled the authorization dialog.
  */
@@ -247,10 +335,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+   
+    [self  refresh];
+}
+-(void)refresh
+{
     
     frameScrl = scrollEventImages.frame;
     
     [scrollEventImages removeFromSuperview];
+     isdel = 0; 
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.navigationController.view 
                                             animated:YES];
     hud.labelText=@"Loading...";

@@ -15,10 +15,13 @@
 #import "UploadViewController.h"
 #import "Facebook.h"
 #import "AppDelegate.h"
+#import "InviteFriendViewControllerViewController.h"
+
 
 @interface EventViewController : UIViewController<ModalDelegate>
 {  
-    
+    BOOL isdel;
+    NSInteger indexTag;
     ModalController *modal;
     NSMutableArray *imageEGOArray;
     IBOutlet UIScrollView *scrollEventImages;

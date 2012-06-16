@@ -96,41 +96,56 @@
     [self.navigationController  pushViewController:controller
                                           animated:YES];
     [controller  release];
-//   UIAlertView  *myAlertView = [[UIAlertView alloc] initWithTitle:@"Add Event \n" message:@"\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-//    myAlertView.tag = 199;
-//    myTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)];
-//    [myTextField setBackgroundColor:[UIColor whiteColor]];
-//    [myAlertView addSubview:myTextField];
-//    if(TARGET_IPHONE_SIMULATOR)
-//    {
-//        myTextField.text=@"";    //f508f9f7227c
-//    }
-//    [myAlertView show];
-//    [modal sendTheRequestWithPostString:nil withURLString:[NSString stringWithFormat:@"%@%@&email=%@",KsURLSIGNUP,[result  objectForKey:@"name"],[result  objectForKey:@"email"]]];
-//
+    //   UIAlertView  *myAlertView = [[UIAlertView alloc] initWithTitle:@"Add Event \n" message:@"\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+    //    myAlertView.tag = 199;
+    //    myTextField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)];
+    //    [myTextField setBackgroundColor:[UIColor whiteColor]];
+    //    [myAlertView addSubview:myTextField];
+    //    if(TARGET_IPHONE_SIMULATOR)
+    //    {
+    //        myTextField.text=@"";    //f508f9f7227c
+    //    }
+    //    [myAlertView show];
+    //    [modal sendTheRequestWithPostString:nil withURLString:[NSString stringWithFormat:@"%@%@&email=%@",KsURLSIGNUP,[result  objectForKey:@"name"],[result  objectForKey:@"email"]]];
+    //
     
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(alertView.tag ==  199)
-    if(buttonIndex ==1)
     {
-        isGet  = 0;
-        
-        
-        if([myTextField.text length]>0)
+        if(buttonIndex ==1)
         {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-            hud.labelText = @"Loading...";
-
-            [modal  sendTheRequestWithPostString:nil 
-                                   withURLString:[NSString stringWithFormat:@"%@%@&user_email=%@",KsURLADDEVENT,myTextField.text,[ModalController   getContforKey:KsSAVEDLOGGEDIN]]];
+            isGet  = 0;
+            
+            
+            if([myTextField.text length]>0)
+            {
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                hud.labelText = @"Loading...";
+                
+                [modal  sendTheRequestWithPostString:nil 
+                                       withURLString:[NSString stringWithFormat:@"%@%@&user_email=%@",KsURLADDEVENT,myTextField.text,[ModalController   getContforKey:KsSAVEDLOGGEDIN]]];
+            }
+            else
+                [ModalController  FuncAlertMsg:@"Please Enter Name" 
+                                  inController:self];
+        }  
+    } 
+    else if(alertView.tag == 2299)
+    {
+        if(buttonIndex == 0)
+        {
+        isGet = 2;
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view 
+                                                  animated:YES];
+        hud.labelText = @"Deleting...";
+        [modal  sendTheRequestWithPostString:nil 
+                               withURLString:[NSString stringWithFormat:KsDeleteEvent,[[arrayEvent  objectAtIndex:indexToDel]objectForKey:@"event-id"],[ModalController getContforKey:KsSAVEDID]]];   
         }
-        else
-            [ModalController  FuncAlertMsg:@"Please Enter Name" 
-                              inController:self];
-    }   
+    }
+    
 }
 
 -(void)LogOut
@@ -172,15 +187,15 @@
                                                                           action:@selector(AddEvent)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"LogOut" 
-                                                                           style:UIBarButtonItemStyleBordered 
-                                                                          target:self
-                                                                          action:@selector(LogOut)];
+                                                                            style:UIBarButtonItemStyleBordered 
+                                                                           target:self
+                                                                           action:@selector(LogOut)];
     
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view 
                                               animated:YES];
     hud.labelText = @"Loading...";
-
+    
     [self getEvents];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -190,7 +205,7 @@
 -(void)getEvents
 {
     isGet = 1;
-       
+    
     modal = [[ModalController  alloc] init];
     modal.delegate = self;
     [modal  sendTheRequestWithPostString:nil withURLString:KsALLEVENT];
@@ -201,48 +216,48 @@
 {
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     
-//    [ModalController  saveTheContent:self.loginUser
-//                             withKey:KsSAVEDLOGGEDIN];
-//    AddEventViewController *controller = [[AddEventViewController  alloc] init];
-//    [self.navigationController  pushViewController:controller
-//                                          animated:YES];
-
-      [self doneLoadingTableViewData];
+    //    [ModalController  saveTheContent:self.loginUser
+    //                             withKey:KsSAVEDLOGGEDIN];
+    //    AddEventViewController *controller = [[AddEventViewController  alloc] init];
+    //    [self.navigationController  pushViewController:controller
+    //                                          animated:YES];
+    
+    [self doneLoadingTableViewData];
     NSLog(@"%@",modal.stringRx);
     
     if(isGet == 1)
     {
-    NSDictionary *_xmlDictionaryData = [[XMLReader dictionaryForXMLData:[modal dataXml] 
-                                                                  error:nil] retain];
-    NSLog(@"%@",_xmlDictionaryData);
-    
-    if([[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"] isKindOfClass:[NSArray  class]])
-    {
-        arrayEvent = [[NSMutableArray  alloc] initWithArray:[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"]];
-    
+        NSDictionary *_xmlDictionaryData = [[XMLReader dictionaryForXMLData:[modal dataXml] 
+                                                                      error:nil] retain];
+        NSLog(@"%@",_xmlDictionaryData);
+        
+        if([[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"] isKindOfClass:[NSArray  class]])
+        {
+            arrayEvent = [[NSMutableArray  alloc] initWithArray:[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"]];
+            
+        }
+        else
+        {
+            arrayEvent = [[NSMutableArray  alloc] init];
+            [arrayEvent addObject:[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"] ];
+        }
+        
+        [tableEvent  reloadData];
     }
-    else
-    {
-        arrayEvent = [[NSMutableArray  alloc] init];
-        [arrayEvent addObject:[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"] ];
-    }
-
-     [tableEvent  reloadData];
-    }
-    else
+    else if(isGet == 2)
     {
         NSLog(@"%@",modal.stringRx);
-    
+        
         [self getEvents];
     }
 }
 
 -(void)getError
 {
-        [self doneLoadingTableViewData];
-        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        [ModalController FuncAlertMsg:@"Error in network!!!"
-                       inController:self];
+    [self doneLoadingTableViewData];
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    [ModalController FuncAlertMsg:@"Error in network!!!"
+                     inController:self];
 }
 
 #pragma mark -tableview delegate-
@@ -304,36 +319,43 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EventCellView" owner:self options:nil];
         
         cell = (EventViewCell *)[nib objectAtIndex:0];
+        cell.delegate = self;
     }
     
     
     if(indexPath.row%2 == 0)
-    cell.contentView.backgroundColor = [UIColor  colorWithRed:(float)33/256 green:(float)33/256  blue:(float)33/256  alpha:1.0];
+        cell.contentView.backgroundColor = [UIColor  colorWithRed:(float)33/256 green:(float)33/256  blue:(float)33/256  alpha:1.0];
     else {
         cell.contentView.backgroundColor = [UIColor  colorWithRed:(float)102/256 green:(float)102/256  blue:(float)102/256  alpha:1.0];
-
+        
     }
     cell.backgroundView = nil;
     
-//    cell.textLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
-//    cell.detailTextLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user-name"];
-//    cell.textLabel.backgroundColor =[UIColor  clearColor ];
-//    cell.detailTextLabel.backgroundColor = [UIColor  clearColor];
-//    cell.detailTextLabel.textColor = [UIColor whiteColor];
-//    cell.textLabel.textColor = [UIColor whiteColor];
+    //    cell.textLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
+    //    cell.detailTextLabel.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user-name"];
+    //    cell.textLabel.backgroundColor =[UIColor  clearColor ];
+    //    cell.detailTextLabel.backgroundColor = [UIColor  clearColor];
+    //    cell.detailTextLabel.textColor = [UIColor whiteColor];
+    //    cell.textLabel.textColor = [UIColor whiteColor];
     
     cell.lableName.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
     cell.lableCreater.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user-name"];
     
     cell.imageMain.image = [UIImage imageNamed:@"icon-placeholder.png"];
-   
+    
     if([[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-image-path"])
-    cell.imageMain.imageURL = [NSURL URLWithString:[[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-image-path"]];
-   
+        cell.imageMain.imageURL = [NSURL URLWithString:[[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-image-path"]];
+    
     
     cell.lableCreater.backgroundColor = [UIColor  clearColor];
     cell.lableName.backgroundColor = [UIColor  clearColor];
-
+    if(![[[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user"] isEqualToString:[ModalController  getContforKey:KsSAVEDLOGGEDIN]])
+    {   
+        [cell.btnDel  removeFromSuperview];
+    }
+    else {
+        cell.btnDel.tag = indexPath.row;
+    }
     //    cell.backgroundColor = COLORCELL
 	cell.accessoryView = nil;
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -345,20 +367,20 @@
 {
     [ModalController  saveTheContent:[[arrayEvent  objectAtIndex:indexPath.row ] objectForKey:@"event-id"] 
                              withKey:KsSELEVENT];
-//    tabBarcont = [[UITabBarController alloc] init];
-//    
-//    UINavigationController *navigation
-//    EventViewController *controllerEvent = [[EventViewController  alloc] init];
-//    UploadViewController *controlllerUpload = [[UploadViewController   alloc] init];
-//    
-//    [tabBarcont setViewControllers:
-//     [NSArray arrayWithObjects:controllerEvent, controlllerUpload, nil]];
+    //    tabBarcont = [[UITabBarController alloc] init];
+    //    
+    //    UINavigationController *navigation
+    //    EventViewController *controllerEvent = [[EventViewController  alloc] init];
+    //    UploadViewController *controlllerUpload = [[UploadViewController   alloc] init];
+    //    
+    //    [tabBarcont setViewControllers:
+    //     [NSArray arrayWithObjects:controllerEvent, controlllerUpload, nil]];
     
-//    tabBarcont.selectedIndex = 0;
-//    [self.navigationController pushViewController:tabBarcont
-//                                         animated:YES];
-//    
-
+    //    tabBarcont.selectedIndex = 0;
+    //    [self.navigationController pushViewController:tabBarcont
+    //                                         animated:YES];
+    //    
+    
     EventViewController *controller = [[EventViewController  alloc] init];
     controller.stringTitle = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-name"];
     [self.navigationController  pushViewController:controller
@@ -366,7 +388,26 @@
     [controller  release];
 }
 
+-(void)deleteWith:(NSInteger)index
+{
+    indexToDel = index;
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Do you want to delete this Event"
+                                                    message:nil 
+                                                   delegate:self 
+                                          cancelButtonTitle:nil 
+                                          otherButtonTitles:@"YES",@"NO", nil];
+    alert.tag = 2299;
+    [alert show];
+    [alert release];
+    
+    NSLog(@"%d",index);
+}
 
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    
+//}
 - (void)viewDidUnload
 {
     [super viewDidUnload];

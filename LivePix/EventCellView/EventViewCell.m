@@ -9,7 +9,7 @@
 #import "EventViewCell.h"
 
 @implementation EventViewCell
-@synthesize lableCreater,lableName,imageMain;
+@synthesize lableCreater,delegate,lableName,imageMain,btnDel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -18,6 +18,11 @@
         // Initialization code
     }
     return self;
+}
+
+-(IBAction)deleteEvent:(id)sender
+{
+    [delegate  deleteWith:self.btnDel.tag];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

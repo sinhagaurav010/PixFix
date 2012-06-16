@@ -109,11 +109,13 @@
     
 }
 - (void)request:(FBRequest *)request didLoad:(id)result {
+
 //    
 //    [ModalController showTheAlertWithMsg:@"Posted in FaceBook" 
 //                               withTitle:@"Success"
 //                            inController:self];
     
+    isLogin = 1;
     self.loginUser = [result  objectForKey:@"email"]; 
 
     NSLog(@"%@-----  %@",[result  objectForKey:@"email"],result);
@@ -257,16 +259,27 @@
 
 -(void)getdata
 {
+    NSLog(@"%@",modal.stringRx);
+    if(isLogin == 1)
+    {   
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-
-    [ModalController  saveTheContent:self.loginUser
-                             withKey:KsSAVEDLOGGEDIN];
+        
+        [ModalController  saveTheContent:modal.stringRx withKey:KsSAVEDID];
+        
+        [ModalController  saveTheContent:self.loginUser
+                                 withKey:KsSAVEDLOGGEDIN];
+    
     AddEventViewController *controller = [[AddEventViewController  alloc] initWithNibName:@"AddEventViewController"
                                                                                    bundle:nil];
     [self.navigationController  pushViewController:controller
                                           animated:YES];
+    }
+    else {
+       
+        [modal sendTheRequestWithPostString:nil
+                              withURLString:[NSString stringWithFormat:KsURLLOIN,self.loginUser]];   
+    }
     
-    NSLog(@"%@",modal.stringRx);
 }
 
 -(void)getError
