@@ -25,4 +25,5 @@
 @property(retain)IBOutlet UILabel *lableName;
 @property(retain)IBOutlet UILabel *lableCreater;
 @property(retain)IBOutlet  UIButton *btnDel;
+@property(retain)IBOutlet UILabel *lableTime;
 @end

@@ -23,6 +23,13 @@
 		18D82601158CDD2100228845 /* FBFriendBiew.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D82600158CDD2100228845 /* FBFriendBiew.xib */; };
 		18D82605158CE03F00228845 /* InviteFriendViewControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D82603158CE03F00228845 /* InviteFriendViewControllerViewController.m */; };
 		18D82606158CE03F00228845 /* InviteFriendViewControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D82604158CE03F00228845 /* InviteFriendViewControllerViewController.xib */; };
+		18D8260A158CE49B00228845 /* InviteTableViewCellCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D82609158CE49B00228845 /* InviteTableViewCellCell.m */; };
+		18D8260D158CE4E500228845 /* InviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D8260C158CE4E500228845 /* InviteTableViewCell.xib */; };
+		18D82610158D06DC00228845 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D8260E158D06DC00228845 /* AddressBook.framework */; };
+		18D82611158D06DC00228845 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D8260F158D06DC00228845 /* AddressBookUI.framework */; };
+		18D82618158D1E3900228845 /* check_empty_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D82616158D1E3900228845 /* check_empty_new.png */; };
+		18D82619158D1E3900228845 /* check_filled_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D82617158D1E3900228845 /* check_filled_new.png */; };
+		18D8261F158D349400228845 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D8261E158D349300228845 /* MessageUI.framework */; };
 		18D97C9815877AC7004572B4 /* NewEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D97C9615877AC6004572B4 /* NewEventViewController.m */; };
 		18D97C9915877AC7004572B4 /* NewEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D97C9715877AC6004572B4 /* NewEventViewController.xib */; };
 		18D97CAA15878A58004572B4 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D97CA915878A58004572B4 /* EGORefreshTableHeaderView.m */; };
@@ -126,6 +133,14 @@
 		18D82602158CE03F00228845 /* InviteFriendViewControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InviteFriendViewControllerViewController.h; path = InviteFriendViewController/InviteFriendViewControllerViewController.h; sourceTree = "<group>"; };
 		18D82603158CE03F00228845 /* InviteFriendViewControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InviteFriendViewControllerViewController.m; path = InviteFriendViewController/InviteFriendViewControllerViewController.m; sourceTree = "<group>"; };
 		18D82604158CE03F00228845 /* InviteFriendViewControllerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InviteFriendViewControllerViewController.xib; path = InviteFriendViewController/InviteFriendViewControllerViewController.xib; sourceTree = "<group>"; };
+		18D82608158CE49B00228845 /* InviteTableViewCellCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteTableViewCellCell.h; sourceTree = "<group>"; };
+		18D82609158CE49B00228845 /* InviteTableViewCellCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteTableViewCellCell.m; sourceTree = "<group>"; };
+		18D8260C158CE4E500228845 /* InviteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InviteTableViewCell.xib; path = InviteFriendViewController/InviteTableViewCell.xib; sourceTree = "<group>"; };
+		18D8260E158D06DC00228845 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		18D8260F158D06DC00228845 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		18D82616158D1E3900228845 /* check_empty_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_empty_new.png; sourceTree = "<group>"; };
+		18D82617158D1E3900228845 /* check_filled_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_filled_new.png; sourceTree = "<group>"; };
+		18D8261E158D349300228845 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		18D97C9515877AC6004572B4 /* NewEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewEventViewController.h; sourceTree = "<group>"; };
 		18D97C9615877AC6004572B4 /* NewEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewEventViewController.m; sourceTree = "<group>"; };
 		18D97C9715877AC6004572B4 /* NewEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewEventViewController.xib; sourceTree = "<group>"; };
@@ -254,6 +269,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18D8261F158D349400228845 /* MessageUI.framework in Frameworks */,
+				18D82610158D06DC00228845 /* AddressBook.framework in Frameworks */,
+				18D82611158D06DC00228845 /* AddressBookUI.framework in Frameworks */,
 				18F1D2411583DAFD00B4E9A9 /* CoreLocation.framework in Frameworks */,
 				18DB137B15827D090053FB5C /* AssetsLibrary.framework in Frameworks */,
 				5DE3300B1581629A00733C0E /* MobileCoreServices.framework in Frameworks */,
@@ -323,11 +341,22 @@
 		18D82607158CE04300228845 /* InviteFriendViewControllerViewController */ = {
 			isa = PBXGroup;
 			children = (
+				18D8260B158CE4A100228845 /* InviteTableViewCellCell */,
 				18D82602158CE03F00228845 /* InviteFriendViewControllerViewController.h */,
 				18D82603158CE03F00228845 /* InviteFriendViewControllerViewController.m */,
 				18D82604158CE03F00228845 /* InviteFriendViewControllerViewController.xib */,
 			);
 			name = InviteFriendViewControllerViewController;
+			sourceTree = "<group>";
+		};
+		18D8260B158CE4A100228845 /* InviteTableViewCellCell */ = {
+			isa = PBXGroup;
+			children = (
+				18D82608158CE49B00228845 /* InviteTableViewCellCell.h */,
+				18D82609158CE49B00228845 /* InviteTableViewCellCell.m */,
+				18D8260C158CE4E500228845 /* InviteTableViewCell.xib */,
+			);
+			name = InviteTableViewCellCell;
 			sourceTree = "<group>";
 		};
 		18D97C9A15877ACB004572B4 /* NewEventViewController */ = {
@@ -445,6 +474,7 @@
 				1C831125158A0D25002F2991 /* EventCellView.xib */,
 			);
 			name = EventViewCell;
+			path = LivePix;
 			sourceTree = "<group>";
 		};
 		5D9636981585025200CF429A /* Global */ = {
@@ -458,6 +488,7 @@
 		5D96369E1585034600CF429A /* AddEventViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1C831120158A0C3B002F2991 /* EventViewCell */,
 				5D9636991585033B00CF429A /* AddEventViewController.h */,
 				5D96369A1585033B00CF429A /* AddEventViewController.m */,
 				5D96369B1585033B00CF429A /* AddEventViewController.xib */,
@@ -503,6 +534,9 @@
 		5DE32F8E15814AA900733C0E = {
 			isa = PBXGroup;
 			children = (
+				18D8261E158D349300228845 /* MessageUI.framework */,
+				18D8260E158D06DC00228845 /* AddressBook.framework */,
+				18D8260F158D06DC00228845 /* AddressBookUI.framework */,
 				18D82607158CE04300228845 /* InviteFriendViewControllerViewController */,
 				18E3FA5415890FE500A2D254 /* CustomDatePickerView */,
 				18D97CAB15878A5C004572B4 /* EGORefreshTableHeaderView */,
@@ -594,7 +628,6 @@
 		5DE32FC515814C0700733C0E /* EventViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1C831120158A0C3B002F2991 /* EventViewCell */,
 				5DE32FC015814C0000733C0E /* EventViewController.h */,
 				5DE32FC115814C0000733C0E /* EventViewController.m */,
 				5DE32FC215814C0000733C0E /* EventViewController.xib */,
@@ -605,6 +638,8 @@
 		5DE32FCA15814E7A00733C0E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				18D82616158D1E3900228845 /* check_empty_new.png */,
+				18D82617158D1E3900228845 /* check_filled_new.png */,
 				5DE32FCB15814F8800733C0E /* LivePix.jpg */,
 				5DE32FC815814DFD00733C0E /* 15-tags.png */,
 				5DE32FC615814D1900733C0E /* 167-upload-photo.png */,
@@ -748,6 +783,9 @@
 				1C831126158A0D25002F2991 /* EventCellView.xib in Resources */,
 				18D82601158CDD2100228845 /* FBFriendBiew.xib in Resources */,
 				18D82606158CE03F00228845 /* InviteFriendViewControllerViewController.xib in Resources */,
+				18D8260D158CE4E500228845 /* InviteTableViewCell.xib in Resources */,
+				18D82618158D1E3900228845 /* check_empty_new.png in Resources */,
+				18D82619158D1E3900228845 /* check_filled_new.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,6 +844,7 @@
 				1C83111E158A0C21002F2991 /* EventViewCell.m in Sources */,
 				18D825FD158CDC7700228845 /* FBFriendView.m in Sources */,
 				18D82605158CE03F00228845 /* InviteFriendViewControllerViewController.m in Sources */,
+				18D8260A158CE49B00228845 /* InviteTableViewCellCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

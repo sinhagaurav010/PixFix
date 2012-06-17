@@ -241,21 +241,143 @@ if(alertView.tag == 1299)
 }
 
 - (void)login {
-    NSLog(@"Login Press");
-    if(![_facebook isSessionValid])
-    [_facebook authorize:_permissions 
-                delegate:self];
-    else {
-        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       @"Come check out Live pic app.", @"message",
-                                       nil];
+    
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    
+    NSArray *contactArr = (NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
+
+    NSLog(@"%@",contactArr);
+    
+    arrayContact = [[NSMutableArray  alloc] init];
+    
+    for (int i = 0; i < [contactArr count]; i++) 
+    {
+        NSMutableDictionary *dictPerson = [[NSMutableDictionary  alloc] init];
         
-        [_facebook dialog:@"apprequests"
-                andParams:params
-              andDelegate:self];
+        ABRecordRef person = (ABRecordRef)[contactArr objectAtIndex:i];
+        //
+        
+        if((NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty))
+        [dictPerson  setObject:(NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty) forKey:@"FName"];
+        
+        if((NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty))
+        [dictPerson  setObject:(NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty) forKey:@"LName"];
+        
+        [dictPerson  setObject:@"n" forKey:@"status"];
+        if((NSString *)ABRecordCopyValue(person, kABPersonEmailProperty))
+        {
+            
+            ABMultiValueRef emailProperty = ABRecordCopyValue(person, kABPersonEmailProperty);
+            
+            NSArray *emailArray = (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(emailProperty);            [dictPerson  setObject:[NSString stringWithFormat:@"%@", [emailArray objectAtIndex:0]] forKey:@"Email"];
+        
+        }
+        
+        
+        NSData *contactImageData = (NSData*)ABPersonCopyImageDataWithFormat(person,  
+                                                                            kABPersonImageFormatThumbnail);
+        
+        if(contactImageData)
+        {
+        UIImage *img = [[UIImage alloc] initWithData:contactImageData];
+        [dictPerson  setObject:img
+                        forKey:@"image"];
+        }
+        
+        [arrayContact  addObject:dictPerson];
+        
+        
+       
+//        [dictPerson  setObject:[[UIImage alloc] initWithData:[person imageData]]  forKey:@"imgae"];
+        
+//        for(CFIndex j = 0; j < ABMultiValueGetCount(address); j++)
+//        {
+//            CFDictionaryRef addressDict = ABMultiValueCopyValueAtIndex(address, j);
+//            
+//            CFStringRef streetValue = CFDictionaryGetValue(addressDict, kABPersonAddressStreetKey);
+//            
+//            CFStringRef cityValue = CFDictionaryGetValue(addressDict, kABPersonAddressCityKey);
+//            
+//            CFStringRef stateValue = CFDictionaryGetValue(addressDict, kABPersonAddressStateKey);
+//            
+//            CFStringRef zipValue = CFDictionaryGetValue(addressDict, kABPersonAddressZIPKey);
+//            
+//            CFStringRef countryValue = CFDictionaryGetValue(addressDict, kABPersonAddressCountryKey);
+//            
+//            
+//        }
+//        
     }
+    
+    InviteFriendViewControllerViewController *controller = [[InviteFriendViewControllerViewController  alloc] init];
+    controller.arrayContacts = [[NSMutableArray alloc] initWithArray:arrayContact];
+    
+    
+    [self.navigationController  pushViewController:controller
+                                          animated:YES];
+//    NSLog(@"~~~~~~~%@",arrayContact);
+	// creating the picker
+//	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+//	// place the delegate of the picker to the controll
+//	picker.peoplePickerDelegate = self;
+//    
+//	// showing the picker
+//	[self presentModalViewController:picker animated:YES];
+//	// releasing
+//	[picker release];
 }
 
+//- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
+//    // assigning control back to the main controller
+//	[self dismissModalViewControllerAnimated:YES];
+//}
+//
+//- (BOOL)peoplePickerNavigationController: (ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person {
+//    
+//	// setting the first name
+////    firstName.text = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+//    
+//	// setting the last name
+////    lastName.text = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
+//    NSLog(@"%@ %@",(NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty),(NSString *)ABRecordCopyValue(person,  kABPersonEmailProperty));
+//    
+//	// setting the number
+//	/*
+//	 this function will set the first number it finds
+//     
+//	 if you do not set a number for a contact it will probably
+//	 crash
+//	 */
+//	ABMultiValueRef multi = ABRecordCopyValue(person, kABPersonPhoneProperty);
+////	number.text = (NSString*)ABMultiValueCopyValueAtIndex(multi, 0);
+//    
+//	// remove the controller
+//    [self dismissModalViewControllerAnimated:YES];
+//    
+//    return NO;
+//}
+//
+//- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier{
+//    return NO;
+//}
+//- (void)login {
+//    
+//    
+//    NSLog(@"Login Press");
+////    if(![_facebook isSessionValid])
+////    [_facebook authorize:_permissions 
+////                delegate:self];
+////    else {
+////        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+////                                       @"Come check out Live pic app.", @"message",
+////                                       nil];
+////        
+////        [_facebook dialog:@"apprequests"
+////                andParams:params
+////              andDelegate:self];
+////    }
+//}
+//
 
 
 - (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
@@ -276,7 +398,7 @@ if(alertView.tag == 1299)
 //    [_facebook requestWithGraphPath:@"me" 
 //                        andDelegate:self];
     [_facebook requestWithGraphPath:@"me/friends" 
-                         andParams:[ NSMutableDictionary dictionaryWithObjectsAndKeys:@"picture,id,name,link,gender,last_name,first_name",@"fields",nil]
+                          andParams:[ NSMutableDictionary dictionaryWithObjectsAndKeys:@"picture,id,name,link,gender,last_name,first_name,email",@"fields",nil]
                        andDelegate:self];
 
     
@@ -304,7 +426,7 @@ if(alertView.tag == 1299)
                           animated:YES];
     
     InviteFriendViewControllerViewController *controller = [[InviteFriendViewControllerViewController  alloc] init];
-    controller.inviteFriendDict = [NSMutableDictionary  dictionaryWithDictionary:result];
+    controller.inviteFriendDict = [NSMutableDictionary  dictionaryWithDictionary:(NSDictionary *)result];
     
     [self.navigationController  pushViewController:controller
                                           animated:YES];

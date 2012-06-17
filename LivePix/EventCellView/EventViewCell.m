@@ -9,7 +9,7 @@
 #import "EventViewCell.h"
 
 @implementation EventViewCell
-@synthesize lableCreater,delegate,lableName,imageMain,btnDel;
+@synthesize lableCreater,delegate,lableName,imageMain,lableTime,btnDel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -342,7 +342,7 @@
     cell.lableCreater.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-user-name"];
     
     cell.imageMain.image = [UIImage imageNamed:@"icon-placeholder.png"];
-    
+    cell.lableTime.text = [[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-date"];
     if([[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-image-path"])
         cell.imageMain.imageURL = [NSURL URLWithString:[[arrayEvent  objectAtIndex:indexPath.row] objectForKey:@"event-image-path"]];
     

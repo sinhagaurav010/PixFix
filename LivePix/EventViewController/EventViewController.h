@@ -17,6 +17,8 @@
 #import "AppDelegate.h"
 #import "InviteFriendViewControllerViewController.h"
 
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 @interface EventViewController : UIViewController<ModalDelegate>
 {  
@@ -27,6 +29,7 @@
     IBOutlet UIScrollView *scrollEventImages;
     CGRect frameScrl;
     NSArray *_permissions;
+    NSMutableArray *arrayContact;
 }
 - (void)login;
 @property (retain, nonatomic) Facebook * facebook;
