@@ -86,14 +86,20 @@
                                       objectForKey:@"image-thumb"]];
         [scrollEventImages  addSubview:imageEvet];
         
-        UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc]
-                                                          initWithTarget:self
-                                                          action:@selector(handleLongPressGesture:)];
-        
-        
-        //longPressGesture.minimumPressDuration = 2.0;
-        [imageEvet addGestureRecognizer:longPressGesture];
+//        UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc]
+//                                                          initWithTarget:self
+//                                                          action:@selector(handleLongPressGesture:)];
+//        
+//        
+//        //longPressGesture.minimumPressDuration = 2.0;
+//        [imageEvet addGestureRecognizer:longPressGesture];
 
+        UISwipeGestureRecognizer *leftSwipe  =  [[UISwipeGestureRecognizer alloc]initWithTarget:self 
+                                                                                         action:@selector(handleLongPressGesture:)];
+        [leftSwipe setDirection:( UISwipeGestureRecognizerDirectionLeft)];
+        leftSwipe.delegate  =   self;
+        [imageEvet addGestureRecognizer:leftSwipe];
+        
         
         if((i+1)%3==0)
         {
@@ -126,11 +132,11 @@
 }
 
 
--(void)handleLongPressGesture:(UILongPressGestureRecognizer*)sender 
+-(void)handleLongPressGesture:(UISwipeGestureRecognizer*)sender 
 {
     if([[[self.arrayimages    objectAtIndex:sender.view.tag] objectForKey:@"image-creator"] isEqualToString:[ModalController  getContforKey:KsSAVEDID]])
-    if(UIGestureRecognizerStateEnded == sender.state)
-    {
+//    if(UIGestureRecognizerStateEnded == sender.state)
+//    {
         indexTag = [sender   view].tag;
         isdel = 1;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Do you want to delete this Image"
@@ -141,7 +147,7 @@
         alert.tag = 1299;
         [alert show];
         [alert release];
-    }
+//    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -197,9 +203,16 @@ if(alertView.tag == 1299)
         {
             NSLog(@"workInBackGround");
             [self login];
-                     
         }
             break;
+        case 2:
+        {
+            AttendeesViewController *attendeesController = [[AttendeesViewController  alloc] init];
+            [self.navigationController  pushViewController:attendeesController
+                                                  animated:YES];
+        }
+        break;
+
         default:
             break;
     }
@@ -211,7 +224,7 @@ if(alertView.tag == 1299)
                                                      delegate:self
                                             cancelButtonTitle:nil 
                                        destructiveButtonTitle:nil
-                                            otherButtonTitles:@"Invite Friends",@"Add Photos",@"Cancel", nil];
+                                                otherButtonTitles:@"Invite Friends",@"Add Photos",@"Attendees",@"Cancel", nil];
     action.actionSheetStyle = UIActionSheetStyleDefault;
     [action  showInView:self.view];
 }

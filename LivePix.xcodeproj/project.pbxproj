@@ -14,6 +14,8 @@
 		181AA542158680F500EA1A9A /* CatagoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 181AA540158680F500EA1A9A /* CatagoryView.xib */; };
 		181BCA051587E079004D6E36 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 181BCA031587E079004D6E36 /* Default.png */; };
 		181BCA061587E079004D6E36 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 181BCA041587E079004D6E36 /* Default@2x.png */; };
+		184C6CAB158E6CFC00F7D006 /* AttendeesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184C6CA9158E6CFC00F7D006 /* AttendeesViewController.m */; };
+		184C6CAC158E6CFC00F7D006 /* AttendeesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184C6CAA158E6CFC00F7D006 /* AttendeesViewController.xib */; };
 		18C115741584B4C5005139CF /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 18C1156B1584B4C5005139CF /* FBDialog.bundle */; };
 		18C115751584B4C5005139CF /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C1156C1584B4C5005139CF /* Facebook.m */; };
 		18C115761584B4C5005139CF /* FBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C1156F1584B4C5005139CF /* FBDialog.m */; };
@@ -116,6 +118,9 @@
 		181AA540158680F500EA1A9A /* CatagoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CatagoryView.xib; sourceTree = "<group>"; };
 		181BCA031587E079004D6E36 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		181BCA041587E079004D6E36 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		184C6CA8158E6CFC00F7D006 /* AttendeesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttendeesViewController.h; path = LivePix/AttendeesViewController/AttendeesViewController.h; sourceTree = "<group>"; };
+		184C6CA9158E6CFC00F7D006 /* AttendeesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttendeesViewController.m; path = LivePix/AttendeesViewController/AttendeesViewController.m; sourceTree = "<group>"; };
+		184C6CAA158E6CFC00F7D006 /* AttendeesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AttendeesViewController.xib; path = LivePix/AttendeesViewController/AttendeesViewController.xib; sourceTree = "<group>"; };
 		18C115691584B4C5005139CF /* facebook_ios_sdk_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = facebook_ios_sdk_Prefix.pch; sourceTree = "<group>"; };
 		18C1156A1584B4C5005139CF /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		18C1156B1584B4C5005139CF /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FBDialog.bundle; sourceTree = "<group>"; };
@@ -310,6 +315,16 @@
 				181AA540158680F500EA1A9A /* CatagoryView.xib */,
 			);
 			name = CatagoryView;
+			sourceTree = "<group>";
+		};
+		184C6CAD158E6D2400F7D006 /* AttendeesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				184C6CA8158E6CFC00F7D006 /* AttendeesViewController.h */,
+				184C6CA9158E6CFC00F7D006 /* AttendeesViewController.m */,
+				184C6CAA158E6CFC00F7D006 /* AttendeesViewController.xib */,
+			);
+			name = AttendeesViewController;
 			sourceTree = "<group>";
 		};
 		18D825FE158CDC7C00228845 /* FBFriendView */ = {
@@ -534,6 +549,7 @@
 		5DE32F8E15814AA900733C0E = {
 			isa = PBXGroup;
 			children = (
+				184C6CAD158E6D2400F7D006 /* AttendeesViewController */,
 				18D8261E158D349300228845 /* MessageUI.framework */,
 				18D8260E158D06DC00228845 /* AddressBook.framework */,
 				18D8260F158D06DC00228845 /* AddressBookUI.framework */,
@@ -786,6 +802,7 @@
 				18D8260D158CE4E500228845 /* InviteTableViewCell.xib in Resources */,
 				18D82618158D1E3900228845 /* check_empty_new.png in Resources */,
 				18D82619158D1E3900228845 /* check_filled_new.png in Resources */,
+				184C6CAC158E6CFC00F7D006 /* AttendeesViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,6 +862,7 @@
 				18D825FD158CDC7700228845 /* FBFriendView.m in Sources */,
 				18D82605158CE03F00228845 /* InviteFriendViewControllerViewController.m in Sources */,
 				18D8260A158CE49B00228845 /* InviteTableViewCellCell.m in Sources */,
+				184C6CAB158E6CFC00F7D006 /* AttendeesViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

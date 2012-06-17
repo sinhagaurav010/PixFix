@@ -157,10 +157,19 @@
     [controller  release];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    if(modal)
+        [self  getEvents];
+}
 
 - (void)viewDidLoad
 {
-    
+    [NSTimer scheduledTimerWithTimeInterval:15
+                                     target:self
+                                   selector:@selector(getEvents)
+                                   userInfo:nil
+                                    repeats:YES];
     
     tableEvent.backgroundView  = nil;
     tableEvent.backgroundColor = [UIColor  clearColor];
@@ -168,16 +177,16 @@
     [self.navigationController.navigationBar  setTintColor:[UIColor  blackColor]];
     [self.navigationItem setTitle:@"Events"];
     
-    if (_refreshHeaderView == nil) {
-		
-		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableEvent.bounds.size.height, self.view.frame.size.width, tableEvent.bounds.size.height)];
-        view.backgroundColor = [UIColor clearColor];
-		view.delegate = self;
-		[tableEvent addSubview:view];
-		_refreshHeaderView = view;
-		[view release];
-	}
-    
+//    if (_refreshHeaderView == nil) {
+//		
+//		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableEvent.bounds.size.height, self.view.frame.size.width, tableEvent.bounds.size.height)];
+//        view.backgroundColor = [UIColor clearColor];
+//		view.delegate = self;
+//		[tableEvent addSubview:view];
+//		_refreshHeaderView = view;
+//		[view release];
+//	}
+//    
     [self.navigationController setNavigationBarHidden:NO];
     
     
@@ -206,14 +215,17 @@
 {
     isGet = 1;
     
+    [[UIApplication  sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     modal = [[ModalController  alloc] init];
     modal.delegate = self;
-    [modal  sendTheRequestWithPostString:nil withURLString:KsALLEVENT];
+    [modal  sendTheRequestWithPostString:nil withURLString:[NSString  stringWithFormat:KsUrlCreated,[ModalController getContforKey:KsSAVEDLOGGEDIN ]]];
 }
 
 
 -(void)getdata
-{
+{    [[UIApplication  sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     
     //    [ModalController  saveTheContent:self.loginUser
@@ -254,6 +266,8 @@
 
 -(void)getError
 {
+    [[UIApplication  sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
     [self doneLoadingTableViewData];
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     [ModalController FuncAlertMsg:@"Error in network!!!"

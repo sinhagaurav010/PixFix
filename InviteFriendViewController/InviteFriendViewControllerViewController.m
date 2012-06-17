@@ -16,7 +16,7 @@ static UINib *cellNib;
 
 
 @implementation InviteFriendViewControllerViewController
-@synthesize inviteFriendDict,tableView,arrayContacts,cellinvited;
+@synthesize inviteFriendDict,stringEventId,tableView,arrayContacts,cellinvited;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +48,7 @@ static UINib *cellNib;
             [arryEmai addObject:[[arrayContacts  objectAtIndex:i] objectForKey:@"Email"]];
         }
     }
-    NSArray *arrayRec = [NSArray arrayWithArray:arryEmai];
+    arrayRec = [NSArray arrayWithArray:arryEmai];
     MFMailComposeViewController *mcvc = [[[MFMailComposeViewController alloc] init] autorelease];
     mcvc.mailComposeDelegate = self;
     [mcvc setSubject:@"invited for PixLive"];
@@ -61,9 +61,36 @@ static UINib *cellNib;
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError*)error
 {
+    if(result == MFMailComposeResultSent)
+    {
+        NSLog(@"~~~~~~~~~%@",[NSString  stringWithFormat:KsURLINVITATION,[ModalController getContforKey:KsSELEVENT],[ModalController  getContforKey:KsSAVEDLOGGEDIN ],[arrayRec  componentsJoinedByString:@","]]);
+        
+        
+        modal = [[ModalController  alloc] init];
+        modal.delegate = self;
+        [modal  sendTheRequestWithPostString:nil withURLString:[NSString  stringWithFormat:KsURLINVITATION,[ModalController getContforKey:KsSELEVENT],[ModalController  getContforKey:KsSAVEDLOGGEDIN ],[arrayRec  componentsJoinedByString:@","]]];
+    }
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+-(void)getdata
+{
+    NSLog(@"~~~~~~%@",modal.stringRx);
+    
+    if([modal.stringRx  isEqualToString:@"Invited successfully"])
+    {
+        [ModalController  FuncAlertMsg:@"Invited successfully" inController:self];
+    }
+    else {
+        [ModalController  FuncAlertMsg:@"Invited failed" inController:self];
+
+    }
+}
+
+-(void)getError
+{
+
+}
 - (void)viewDidLoad
 {
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"Invite" 

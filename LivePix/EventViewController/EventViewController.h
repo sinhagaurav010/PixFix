@@ -19,7 +19,7 @@
 
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-
+#import "AttendeesViewController.h"
 @interface EventViewController : UIViewController<ModalDelegate>
 {  
     BOOL isdel;

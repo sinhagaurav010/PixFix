@@ -14,10 +14,12 @@
 #import <MessageUI/MessageUI.h>
 
 
-@interface InviteFriendViewControllerViewController : UIViewController
-
+@interface InviteFriendViewControllerViewController : UIViewController<ModalDelegate,MFMailComposeViewControllerDelegate>
 {
+    NSArray *arrayRec;
+    ModalController *modal;
 }
+@property(retain)NSString *stringEventId;
 @property(retain)InviteTableViewCellCell *cellinvited;
 @property(retain)IBOutlet UITableView *tableView;
 @property(retain)NSMutableDictionary *inviteFriendDict;

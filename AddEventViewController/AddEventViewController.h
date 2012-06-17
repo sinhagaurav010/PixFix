@@ -19,6 +19,7 @@
 
 @interface AddEventViewController : UIViewController<ModalDelegate,EGORefreshTableHeaderDelegate,EventCellDelegate>
 {
+   IBOutlet UISegmentedControl *segment;
     BOOL _reloading;
 
     EGORefreshTableHeaderView *_refreshHeaderView;
