@@ -154,6 +154,7 @@
 {
 if(alertView.tag == 1299)
 {
+    if(buttonIndex == 0)
     [modal  sendTheRequestWithPostString:nil 
                            withURLString:[NSString stringWithFormat:KsDeleteImage,[[arrayimages  objectAtIndex:indexTag]objectForKey:@"image-id"],[ModalController getContforKey:KsSAVEDID]]];   
 }

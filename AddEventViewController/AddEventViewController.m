@@ -159,17 +159,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    if(modal)
-        [self  getEvents];
+//    if(modal)
+//        [self  getEvents];
 }
 
 - (void)viewDidLoad
 {
-    [NSTimer scheduledTimerWithTimeInterval:15
-                                     target:self
-                                   selector:@selector(getEvents)
-                                   userInfo:nil
-                                    repeats:YES];
+    
+    
+    [NSThread detachNewThreadSelector:@selector(startTheBackgroundJob) toTarget:self withObject:nil];  
+
     
     tableEvent.backgroundView  = nil;
     tableEvent.backgroundColor = [UIColor  clearColor];
@@ -210,6 +209,27 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+#pragma mark -code-
+
+- (void)startTheBackgroundJob {  
+    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];  
+    // wait for 3 seconds before starting the thread, you don't have to do that. This is just an example how to stop the NSThread for some time  
+    [self performSelectorOnMainThread:@selector(makeMyProgressBarMoving) withObject:nil waitUntilDone:NO];  
+    [pool release];  
+    
+}  
+
+- (void)makeMyProgressBarMoving {  
+    
+    [NSTimer scheduledTimerWithTimeInterval:15
+                                     target:self
+                                   selector:@selector(getEvents)
+                                   userInfo:nil
+                                    repeats:YES];
+    
+}  
+
 
 -(void)getEvents
 {
@@ -224,7 +244,8 @@
 
 
 -(void)getdata
-{    [[UIApplication  sharedApplication] setNetworkActivityIndicatorVisible:NO];
+{    
+    [[UIApplication  sharedApplication] setNetworkActivityIndicatorVisible:NO];
 
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     
@@ -234,14 +255,14 @@
     //    [self.navigationController  pushViewController:controller
     //                                          animated:YES];
     
-    [self doneLoadingTableViewData];
-    NSLog(@"%@",modal.stringRx);
+//    [self doneLoadingTableViewData];
+    NSLog(@"~~~~~~~~~%@",modal.stringRx);
     
     if(isGet == 1)
     {
         NSDictionary *_xmlDictionaryData = [[XMLReader dictionaryForXMLData:[modal dataXml] 
                                                                       error:nil] retain];
-        NSLog(@"%@",_xmlDictionaryData);
+        NSLog(@"~~~~~~~~~~%@",_xmlDictionaryData);
         
         if([[[_xmlDictionaryData objectForKey:@"user-events"] objectForKey:@"events"] isKindOfClass:[NSArray  class]])
         {
